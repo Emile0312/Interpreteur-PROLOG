@@ -7,8 +7,6 @@ type t
 type var
 type obs_t = Fun of string * t list | Var of var
 
-(** Modification d'une variable. *)
-val bind : var -> t -> unit
 
 (** Observation d'un terme. *)
 val observe : t -> obs_t
@@ -37,6 +35,9 @@ val fresh_var : unit -> t
 (** Manipulation de l'état: sauvegarde, restauration. *)
 
 type state
+
+(** Modification d'une variable. *)
+val bind : var -> t -> unit
 
 (** [save ()] renvoie un descripteur de l'état actuel. *)
 val save : unit -> state
