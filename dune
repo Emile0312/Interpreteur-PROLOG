@@ -1,0 +1,9 @@
+(executable
+ (name Interpreteur_prolog)
+ (libraries)
+)
+(env
+ (dev
+   (flags (:standard -warn-error -A))
+  )
+)
