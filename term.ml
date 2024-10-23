@@ -6,6 +6,26 @@ type var = string
 (*ne va pas changer*)
 type obs_t = Fun of string * t list | Var of var
 
+ let (current_state : state) = ref (fun x : var -> Var_t(x)) 
+
+(** Modification d'une variable. *)
+val bind : var -> t -> unit
+let bind (x : var) (terme : t) = current_state := (fun y -> if(y = x) then t else (!current_state y))
+
+(** [save ()] renvoie un descripteur de l'état actuel. *)
+val save : unit -> state
+let save () = !current_state;
+
+(** [restore s] restaure les variables dans l'état décrit par [s]. *)
+val restore : state -> unit
+let restore (ancien_state : state) = current_state := ancien_state
+
+(** Remise à zéro de l'état interne du module.
+    Garantit que les futurs usages seront comme 
+    dans un module fraichement initialisé. *)
+val reset : unit -> unit
+let reset () = current_state := ref (fun x : var -> Var_t(x)) 
+
 
 let observe (terme : t) : obs_t = 
 	match terme with 
